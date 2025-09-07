@@ -1,8 +1,11 @@
-import React from 'react'
-
+import { Outlet } from 'react-router'
+import Navigator from '@/components/playgorund/Navigator'
 const AuthLayout = () => {
   return (
-    <div>auth-layout</div>
+    <>
+       <Outlet />
+       <Navigator />
+   </>
   )
 }
 

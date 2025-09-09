@@ -1,10 +1,12 @@
 import { Outlet } from 'react-router'
-import Navigator from '@/components/playgorund/Navigator'
+import App from '@/App'
 const AuthLayout = () => {
   return (
     <>
+    <div className="w-full h-auto flex items-center justify-center">
        <Outlet />
-       <Navigator />
+       <App/>
+    </div>
    </>
   )
 }

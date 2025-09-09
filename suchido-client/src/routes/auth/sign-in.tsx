@@ -62,9 +62,7 @@ const SignIn = () => {
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription>
-                      This is your email address.
-                    </FormDescription>
+
                     <FormMessage />
                   </FormItem>
                 )}
@@ -74,7 +72,12 @@ const SignIn = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
+                    <div className="div">
                     <FormLabel>Password</FormLabel>
+                    <Link to="/auth/reset-password" className="text-sm hover:underline text-blue-900 float-right">
+                      Forgot Password?
+                    </Link>
+                    </div>
                     <FormControl>
                       <Input
                         type="password"
@@ -82,9 +85,7 @@ const SignIn = () => {
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription>
-                      This is your account password.
-                    </FormDescription>
+
                     <FormMessage />
                   </FormItem>
                 )}
@@ -98,10 +99,7 @@ const SignIn = () => {
             <p className="text-sm text-muted-foreground">
               Don't have an account?
             </p>
-            <Link
-              to="/auth/sign-up"
-              className="text-sm hover:underline ml-1"
-            >
+            <Link to="/auth/sign-up" className="text-sm hover:underline ml-1">
               Sign Up
             </Link>
           </CardFooter>

@@ -10,6 +10,12 @@ export const signUpSchema = z.object({
     password: z.string().min(6, "Password must be at least 6 characters long"),
     name: z.string().min(3, "Name must be at least 3 characters long"),
     confirmPassword: z.string().min(1, "Please confirm your password")
-}).refine((val) => val.password !== val.confirmPassword, {
-    message: "Passwords do not match",
+}).superRefine((val, ctx) => {
+    if (val.password !== val.confirmPassword) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Passwords do not match',
+        path: ['confirmPassword'], // Attach the error to the confirmPassword field
+      });
+    }
 })

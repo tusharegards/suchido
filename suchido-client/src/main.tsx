@@ -7,12 +7,14 @@ import SignUp from "./routes/auth/sign-up.tsx";
 import ResetPassword from "./routes/auth/reset-password.tsx";
 import VerifyEmail from "./routes/auth/verify-email.tsx";
 import AuthLayout from "./routes/auth/auth-layout.tsx";
+import App from "./App.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    Component: App,
     children: [
-      { index: true, Component: AuthLayout },
+      { index: true, Component: App },
       { path: "auth",
         Component: AuthLayout,
         children: [

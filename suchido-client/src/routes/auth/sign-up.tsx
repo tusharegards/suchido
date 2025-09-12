@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { signInSchema, signUpSchema } from "../../lib/schema.ts";
+import { signUpSchema } from "../../lib/schema.ts";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -13,7 +13,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,8 +21,10 @@ import {
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Link } from "react-router";
+import { useSignUpMutation } from "@/hooks/use-auth.ts";
+import { toast } from "sonner";
 
-type SignUpUserData = z.infer<typeof signUpSchema>;
+export type SignUpUserData = z.infer<typeof signUpSchema>;
 
 const SignUp = () => {
   const form = useForm<SignUpUserData>({
@@ -31,8 +32,19 @@ const SignUp = () => {
     defaultValues: { name: "", email: "", password: "", confirmPassword: "" },
   });
 
+  const { mutate, isPending } = useSignUpMutation();
+
   const onHandleSubmit = (data: SignUpUserData) => {
-    console.log(data);
+    mutate(data, {
+      onSuccess: () => {
+        toast.success("Account Created Successfully");
+      },
+      onError: (error: any) => {
+        const errorMessage = error.response.data.message || "An error occurred";
+        console.log(errorMessage);
+        toast.error("Account Creation Failed : " + errorMessage);
+      },
+    });
   };
 
   return (
@@ -113,8 +125,12 @@ const SignUp = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">
-                Sign Up
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={isPending}
+              >
+                {isPending ? "Signing up..." : "Sign Up"}
               </Button>
             </form>
           </Form>
